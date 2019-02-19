@@ -12,7 +12,7 @@ degrees=input('At what angle should the fins be canted?\n');
 machno=input('What is the rocket velocity (mach number)?\n');
 finwidth=input('What width (outward) should the fins be (in)?\n');
 finlength=input('What length (along body) should the fins be (in)?\n');
-triangle=input('Rectangle configuration? [Y/N]: ');
+triangle=input('Rectangle configuration? [''Y''/''N'']: ');
 if triangle=='Y'
     triangle=false;
 else
