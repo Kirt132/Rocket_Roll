@@ -91,7 +91,7 @@ angle = 13/180*pi;%slope angle
 d = .0475; %rocket diameter in m
 m = .65 +.06 %weight of rocket in kg
 rollaccel = ((y2-y1)./(x2-x1))*pi/180
-Izz = m*((9.81*sin(angle) - 0.0475/2.*rollaccel)./rollaccel) %calculate moment of inertia
+Izz = m*((9.81*sin(angle) - 0.0475/2.*rollaccel)./rollaccel)*(d/2) %calculate moment of inertia
 Izz_Avg = mean(Izz)
 
 %%via graph for 19 degrees
@@ -103,5 +103,5 @@ angle = 19/180*pi;%slope angle
 d = .0475; %rocket diameter in m
 m = .65 +.06 %weight of rocket in kg
 rollaccel19 = ((y2-y1)./(x2-x1))*pi/180
-Izz19 = m*((9.81*sin(angle) - ((0.0475/2).*rollaccel19))./rollaccel19) %calculate moment of inertia
+Izz19 = m*((9.81*sin(angle) - ((0.0475/2).*rollaccel19))./rollaccel19)*(d/2) %calculate moment of inertia
 Izz19_Avg = mean(Izz)
