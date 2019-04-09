@@ -1,4 +1,4 @@
-[Moment] = Moment_Calculator(length, width, chordtip, rho, V, theta, ohmega, r, stepsize, finnum);
+%[Moment] = Moment_Calculator(length, width, chordtip, rho, V, theta, ohmega, r, stepsize, finnum);
 %%make a function for the roll momenet of the rocket
 %variables
 length = 6*0.0254; %chord 1
@@ -17,5 +17,5 @@ intwidth = r:stepsize:width+r; %width at which to intergrate the moment over
 vofr = intwidth*ohmega; %calculate anglar velocity across the fin
 lengthint = -((length-chordtip)/width)*(intwidth-r)+length; %calculate the length in 1mm imcrements
 cl = 2*pi*theta; %find the lift coefficient
-M = finnumber*cl*rho*sum(vofr.^2.*lengthint.*intwidth); %find the moment based on the fins
+M = finnum*cl*rho*sum(vofr.^2.*lengthint.*stepsize) %find the moment based on the fins
 
