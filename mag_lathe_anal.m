@@ -21,9 +21,8 @@ z_mag=launch(:,9);
 
 %create time vector
 [length,width]=size(x_accel);
-for i= 1:1:length
-    time(i) = i*.02;
-end
+i= 1:1:length;
+time = i*.02;
 
 %find the launch window
 launchframe=1;
