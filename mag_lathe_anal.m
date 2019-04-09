@@ -1,7 +1,12 @@
 clear
 %load data
-load('Launch_2_5.txt')
-launch=Launch_2_5;
+Launch_2_1 = 0;
+Launch_2_2 = 0;
+Launch_2_3 = 0;
+Launch_2_4 = 0;
+Launch_2_5 = 0;
+load('Launch_2_4.txt')
+launch=Launch_2_4;
 
 x_accel=launch(:,1);
 y_accel=launch(:,2);
@@ -13,7 +18,6 @@ x_mag=launch(:,7);
 y_mag=launch(:,8);
 z_mag=launch(:,9);
 
-%convert z-axis roll rate to hz from rad/s
 
 %create time vector
 [length,width]=size(x_accel);
@@ -24,8 +28,29 @@ end
 %find the launch window
 launchframe=1;
 %Launch start is when z acceleration is > 40 m/s/s
-while z_accel(launchframe)<40
+if (launch == Launch_2_1) | (launch == Launch_2_2)
+    while z_accel(launchframe)<40
     launchframe=launchframe+1;
+    end
+    z_roll = -1*z_roll/(2*pi);
+    x_roll = -1*x_roll/(2*pi);
+    y_roll = -1*y_roll/(2*pi);
+elseif (launch == Launch_2_4)
+    while z_accel(launchframe)<120
+    launchframe=launchframe+1;
+    end
+    z_roll = -1*z_roll/360;
+    x_roll = -1*x_roll/360;
+    y_roll = -1*y_roll/360;
+elseif (launch == Launch_2_5)
+    while z_accel(launchframe)<40
+    launchframe=launchframe+1;
+    end
+    z_roll = -1*z_roll/360;
+    x_roll = -1*x_roll/360;
+    y_roll = -1*y_roll/360;
+else
+    justwork = 'Didnt work'
 end
 %launch window start is 0.5 s before launch frame and 13 s after. Find it
 %by frame and correlate to time
@@ -55,9 +80,9 @@ z_accel_processed = z_accel(minIdx&maxIdx)/9.8;
 x_accel_processed = x_accel(minIdx&maxIdx)/9.8;
 y_accel_processed = y_accel(minIdx&maxIdx)/9.8;
 
-z_roll_processed = -1*z_roll(minIdx&maxIdx)/(2*pi);
-x_roll_processed = -1*x_roll(minIdx&maxIdx)/(2*pi);
-y_roll_processed = -1*y_roll(minIdx&maxIdx)/(2*pi);
+z_roll_processed = z_roll(minIdx&maxIdx);
+x_roll_processed = x_roll(minIdx&maxIdx);
+y_roll_processed = y_roll(minIdx&maxIdx);
 
 timeValues = timeValues - launchstart;
 
