@@ -5,8 +5,8 @@ Launch_2_2 = 0;
 Launch_2_3 = 0;
 Launch_2_4 = 0;
 Launch_2_5 = 0;
-load('Launch_2_4.txt')
-launch=Launch_2_4;
+load('Launch_2_5.txt')
+launch=Launch_2_5;
 
 x_accel=launch(:,1);
 y_accel=launch(:,2);
@@ -35,6 +35,7 @@ if (launch == Launch_2_1) | (launch == Launch_2_2)
     z_roll = -1*z_roll/(2*pi);
     x_roll = -1*x_roll/(2*pi);
     y_roll = -1*y_roll/(2*pi);
+    minThresh = 0;
 elseif (launch == Launch_2_4)
     while z_accel(launchframe)<120
     launchframe=launchframe+1;
@@ -42,6 +43,7 @@ elseif (launch == Launch_2_4)
     z_roll = -1*z_roll/360;
     x_roll = -1*x_roll/360;
     y_roll = -1*y_roll/360;
+    minThresh = -30;
 elseif (launch == Launch_2_5)
     while z_accel(launchframe)<40
     launchframe=launchframe+1;
@@ -49,7 +51,9 @@ elseif (launch == Launch_2_5)
     z_roll = -1*z_roll/360;
     x_roll = -1*x_roll/360;
     y_roll = -1*y_roll/360;
+    minThresh = -37;
 else
+    minThresh = 0;
     justwork = 'Didnt work'
 end
 %launch window start is 0.5 s before launch frame and 13 s after. Find it
@@ -101,7 +105,7 @@ pspectrum(x_mag_ROI,timeValues, ...
     'Leakage',leakage, ...
     'TimeResolution',timeResolution, ...
     'OverlapPercent',overlapPercent, ...
-    'MinThreshold',0, ...
+    'MinThreshold',minThresh, ...
     'Reassign',reassignFlag);
 
 figure('Name', 'Acceleration and Roll','NumberTitle','off')
@@ -130,5 +134,5 @@ ylabel('Gyro Roll Rate (Hz)')
 title('Roll Rate vs Time')
 
 
-signalAnalyzer
+%signalAnalyzer
 
