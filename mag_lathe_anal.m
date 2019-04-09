@@ -1,13 +1,15 @@
 clear
-%load data
+%Create variables. This is just so that the if statements work later.
 Launch_2_1 = 0;
 Launch_2_2 = 0;
 Launch_2_3 = 0;
 Launch_2_4 = 0;
 Launch_2_5 = 0;
+%load data. Just change the number of the launch in both lines below
 load('Launch_2_5.txt')
 launch=Launch_2_5;
 
+%make column vectors out of the table of data
 x_accel=launch(:,1);
 y_accel=launch(:,2);
 z_accel=launch(:,3);
@@ -19,14 +21,18 @@ y_mag=launch(:,8);
 z_mag=launch(:,9);
 
 
-%create time vector
+%create time vector. Assume logger writes at 50 hz. 
 [length,width]=size(x_accel);
 i= 1:1:length;
 time = i*.02;
 
-%find the launch window
+%find the launch window. Each launch has various accelerations before
+%ignition which means there needs to be a different threshold in order to
+%actually detect it. Also, launches 4 and 5 used a different set of
+%electronics which use different units. These if statements also adjust for
+%the magnitude of the frequencies on the spectrogram.
 launchframe=1;
-%Launch start is when z acceleration is > 40 m/s/s
+
 if (launch == Launch_2_1) | (launch == Launch_2_2)
     while z_accel(launchframe)<40
     launchframe=launchframe+1;
