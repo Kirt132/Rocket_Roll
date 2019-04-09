@@ -23,8 +23,7 @@
    %The goal of this is to show the force caused by an unbalanced rocket
    %mass. This will lead to internal stresses in the rocket and has
    %potential to change the angle of attack of the rocket
-   spinspeed = 20; %spin speed of rocket in radians per second
-   w = spinspeed*2*pi;%spin speed of rocket in radians per second
+   spinspeed = 20 %spin speed of rocket in radians per second
+   w = %spin speed of rocket in radians per second
    %borrows d from above
-   m = .005; %offset mass (in kg)
-   force = m*d/2*w^2
+   m = .00%offset mass (in kg)
