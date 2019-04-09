@@ -116,7 +116,7 @@ pspectrum(x_mag_ROI,timeValues, ...
 figure('Name', 'Acceleration and Roll','NumberTitle','off')
 
 %Plot Acceleration
-ax1 = subplot(3,1,1);
+ax1 = subplot(2,1,1);
 hold on
 plot(timeValues,z_accel_processed)
 plot(timeValues,y_accel_processed)
@@ -126,21 +126,9 @@ xlabel('Time(s)')
 ylabel('Acceleration(g)')
 title('Acceleration vs Time')
 
-ax2 = subplot(3,1,2);
-[length,width]=size(z_accel_processed);
-velocity = zeros(length,1);
-velocity(1) = 0;
-for i = 2:length
-    velocity(i) = z_accel_processed(i-1)*9.8 * .02 + velocity(i-1);
-end
-
-plot(timeValues,velocity)
-xlabel('Time(s)')
-ylabel('Velocity (m/s)')
-title('Velocity vs Time')
 
 %Plot Roll
-ax3 = subplot(3,1,3);
+ax2 = subplot(2,1,2);
 hold on
 plot(timeValues,z_roll_processed)
 plot(timeValues,y_roll_processed)
@@ -150,7 +138,17 @@ xlabel('Time(s)')
 ylabel('Gyro Roll Rate (Hz)')
 title('Roll Rate vs Time')
 
-
+[length,width]=size(z_accel_processed);
+velocity = zeros(length,1);
+velocity(1) = 0;
+for i = 2:length
+    velocity(i) = z_accel_processed(i-1)*9.8 * .02 + velocity(i-1);
+end
+figure
+plot(timeValues,velocity)
+xlabel('Time(s)')
+ylabel('Velocity (m')
+title('Roll Rate vs Time')
 
 %signalAnalyzer
 
