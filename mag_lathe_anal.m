@@ -6,8 +6,8 @@ Launch_2_3 = 0;
 Launch_2_4 = 0;
 Launch_2_5 = 0;
 %load data. Just change the number of the launch in both lines below
-load('Launch_2_4.txt')
-launch=Launch_2_4;
+load('Launch_2_5.txt')
+launch=Launch_2_5;
 
 %make column vectors out of the table of data
 x_accel=launch(:,1);
