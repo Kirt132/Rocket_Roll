@@ -112,45 +112,64 @@ pspectrum(x_mag_ROI,timeValues, ...
     'OverlapPercent',overlapPercent, ...
     'MinThreshold',minThresh, ...
     'Reassign',reassignFlag);
-
+[P, F, T] = pspectrum(x_mag_ROI,timeValues, ...
+    'spectrogram', ...
+    'FrequencyLimits',frequencyLimits, ...
+    'Leakage',leakage, ...
+    'TimeResolution',timeResolution, ...
+    'OverlapPercent',overlapPercent, ...
+    'MinThreshold',minThresh, ...
+    'Reassign',reassignFlag);
 figure('Name', 'Acceleration and Roll','NumberTitle','off')
 
 %Plot Acceleration
-ax1 = subplot(3,1,1);
-hold on
-plot(timeValues,z_accel_processed)
-plot(timeValues,y_accel_processed)
-plot(timeValues,x_accel_processed)
-axis([0 launchstop-launchstart (min(z_accel_processed)-.1*(max(z_accel_processed)-min(z_accel_processed))) (max(z_accel_processed)+.1*(max(z_accel_processed)-min(z_accel_processed)))])
-xlabel('Time(s)')
-ylabel('Acceleration(g)')
-title('Acceleration vs Time')
+%ax1 = subplot(3,1,1);
+%hold on
+%plot(timeValues,z_accel_processed)
+%plot(timeValues,y_accel_processed)
+%plot(timeValues,x_accel_processed)
+%axis([0 launchstop-launchstart (min(z_accel_processed)-.1*(max(z_accel_processed)-min(z_accel_processed))) (max(z_accel_processed)+.1*(max(z_accel_processed)-min(z_accel_processed)))])
+%xlabel('Time(s)')
+%ylabel('Acceleration(g)')
+%title('Acceleration vs Time')
 
-ax2 = subplot(3,1,2);
-[length,width]=size(z_accel_processed);
-velocity = zeros(length,1);
-velocity(1) = 0;
-for i = 2:length
-    velocity(i) = z_accel_processed(i-1)*9.8 * .02 + velocity(i-1);
-end
+%ax2 = subplot(3,1,2);
+%[length,width]=size(z_accel_processed);
+%velocity = zeros(length,1);
+%velocity(1) = 0;
+%for i = 2:length
+%    velocity(i) = z_accel_processed(i-1)*9.8 * .02 + velocity(i-1);
+%end
 
-plot(timeValues,velocity)
-xlabel('Time(s)')
-ylabel('Velocity (m/s)')
-title('Velocity vs Time')
+%plot(timeValues,velocity)
+%xlabel('Time(s)')
+%ylabel('Velocity (m/s)')
+%title('Velocity vs Time')
 
 %Plot Roll
-ax3 = subplot(3,1,3);
-hold on
-plot(timeValues,z_roll_processed)
-plot(timeValues,y_roll_processed)
-plot(timeValues,x_roll_processed)
-axis([0 launchstop-launchstart (min(z_roll_processed)-.1*(max(z_roll_processed)-min(z_roll_processed))) (max(z_roll_processed)+.1*(max(z_roll_processed)-min(z_roll_processed)))])
-xlabel('Time(s)')
-ylabel('Gyro Roll Rate (Hz)')
-title('Roll Rate vs Time')
+%ax3 = subplot(3,1,3);
+%hold on
+%plot(timeValues,z_roll_processed)
+%plot(timeValues,y_roll_processed)
+%plot(timeValues,x_roll_processed)
+%axis([0 launchstop-launchstart (min(z_roll_processed)-.1*(max(z_roll_processed)-min(z_roll_processed))) (max(z_roll_processed)+.1*(max(z_roll_processed)-min(z_roll_processed)))])
+%xlabel('Time(s)')
+%ylabel('Gyro Roll Rate (Hz)')
+%title('Roll Rate vs Time')
 
+x=1;
+[lengthp, widthp] = size(P);
+for j =1:widthp
+    for i =1:lengthp
+        if P(i,j) > .002
+            ov(x,1) = T(j);
+            ov(x,2) = F(i);
+            x=x+1;
+        end
+    end
+end
 
+plot(ov(:,1),ov(:,2))
 
 %signalAnalyzer
 
