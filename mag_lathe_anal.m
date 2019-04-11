@@ -6,8 +6,8 @@ Launch_2_3 = 0;
 Launch_2_4 = 0;
 Launch_2_5 = 0;
 %load data. Just change the number of the launch in both lines below
-load('Launch_2_5.txt')
-launch=Launch_2_5;
+load('Launch_2_4.txt')
+launch=Launch_2_4;
 
 %make column vectors out of the table of data
 x_accel=launch(:,1);
@@ -41,6 +41,8 @@ if (launch == Launch_2_1) | (launch == Launch_2_2)
     x_roll = -1*x_roll/(2*pi);
     y_roll = -1*y_roll/(2*pi);
     minThresh = 0;
+    pos = 'last';
+    powerCutoff = 3;
 elseif (launch == Launch_2_4)
     while z_accel(launchframe)<120
     launchframe=launchframe+1;
@@ -49,6 +51,8 @@ elseif (launch == Launch_2_4)
     x_roll = -1*x_roll/360;
     y_roll = -1*y_roll/360;
     minThresh = -30;
+    pos = 'first';
+    powerCutoff = .005;
 elseif (launch == Launch_2_5)
     while z_accel(launchframe)<40
     launchframe=launchframe+1;
@@ -57,9 +61,12 @@ elseif (launch == Launch_2_5)
     x_roll = -1*x_roll/360;
     y_roll = -1*y_roll/360;
     minThresh = -37;
+    pos = 'last';
+    powerCutoff = .0025;
 else
     minThresh = 0;
     justwork = 'Didnt work'
+    pos = 'last';
 end
 %launch window start is 0.5 s before launch frame and 13 s after. Find it
 %by frame and correlate to time
@@ -161,7 +168,7 @@ x=1;
 [lengthp, widthp] = size(P);
 for j =1:widthp
     for i =1:lengthp
-        if P(i,j) > .002
+        if P(i,j) > powerCutoff
             ov(x,1) = T(j);
             ov(x,2) = F(i);
             x=x+1;
@@ -171,7 +178,7 @@ end
 
 %ai is the index of the unique time values, sorted by last. Somehow this
 %code works although I'm not positive how it works. I'm not questioning it
-[nv1, ai] = unique(ov(:,1), 'last')
+[nv1, ai] = unique(ov(:,1), pos)
 figure('name', 'Spectrogram Roll Rate', 'NumberTitle','off')
 plot(ov(ai,1),ov(ai,2))
 xlabel('Time(s)')
