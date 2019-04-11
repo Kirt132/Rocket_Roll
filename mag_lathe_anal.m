@@ -169,7 +169,15 @@ for j =1:widthp
     end
 end
 
-plot(ov(:,1),ov(:,2))
+%ai is the index of the unique time values, sorted by last. Somehow this
+%code works although I'm not positive how it works. I'm not questioning it
+[nv1, ai] = unique(ov(:,1), 'last')
+figure('name', 'Spectrogram Roll Rate', 'NumberTitle','off')
+plot(ov(ai,1),ov(ai,2))
+xlabel('Time(s)')
+ylabel('Roll Rate (Hz)')
+title('Roll Rate vs Time')
+
 
 %signalAnalyzer
 
