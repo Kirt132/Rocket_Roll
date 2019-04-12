@@ -1,4 +1,4 @@
-%Code for Spinning Things
+ %Code for Spinning Things
 clear; %clear variables
 clc; %clear command window
 
