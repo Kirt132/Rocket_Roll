@@ -24,7 +24,7 @@ z_mag=launch(:,9);
 %create time vector. Assume logger writes at 50 hz. 
 [length,width]=size(x_accel);
 i= 1:1:length;
-time = i*.02;
+time = i*.0286;
 
 %find the launch window. Each launch has various accelerations before
 %ignition which means there needs to be a different threshold in order to
@@ -70,8 +70,8 @@ else
 end
 %launch window start is 0.5 s before launch frame and 13 s after. Find it
 %by frame and correlate to time
-logstart = launchframe -.5/.02;
-logstop = launchframe + 13/.02;
+logstart = launchframe -17;
+logstop = launchframe + 455;
 launchstart = time(logstart);
 launchstop = time(logstop);
 
@@ -147,13 +147,13 @@ ax2 = subplot(3,1,2);
 velocity = zeros(length,1);
 velocity(1) = 0;
 for i = 2:length
-    velocity(i) = z_accel_processed(i-1)*9.8 * .02 + velocity(i-1);
+    velocity(i) = z_accel_processed(i-1)*9.8 * .0286 + velocity(i-1);
 end
 [length,width]=size(velocity);
 height = zeros(length,1);
 height(1) = 0;
 for i = 2:length
-    height(i) = velocity(i-1) * .02 + height(i-1);
+    height(i) = velocity(i-1) * .0286 + height(i-1);
 end
 
 plot(timeValues,velocity)
