@@ -1,5 +1,5 @@
 %Code for Spinning Things
-%clear; %clear variables
+clear; %clear variables
 clc; %clear command window
 
 
@@ -9,7 +9,7 @@ clc; %clear command window
 
 
 %% Initialization
-cd C:\MATLAB\Rockets\Launch_Profiles\Simulated_Launches %selects this file as current directory
+cd 'C:\Users\Eric Mellusi\Documents\Rocket_Roll' %selects this file as current directory
 directory = dir; %sets current directory as variable
 file_list = {directory.name}; %accesses all file names and saves them as a list
 file_index = listdlg('PromptString','Select simulation file:','SelectionMode','single','ListSize',[250,300],'InitialValue',3,'ListString',file_list);
@@ -19,7 +19,7 @@ rocket_flight = load(file); %loads file under 'rocket_flight'
 %data must be: time(s), height(ft), velocity(m/s)
 %any other columns are unused by this program
 
-load D:\MATLAB\Rockets\Other_Text_Files\Atmosphere.txt %load atmospheric values comapared to sea level (average)
+load 'C:\Users\Eric Mellusi\Documents\Rocket_Roll\Atmosphere.txt' %load atmospheric values comapared to sea level (average)
 %atmosphere: height(m), temperature(*C), gravity(m/s^2),
 %pressure(abs)(10^4N/m^2), density(kg/m^2), dynamic viscosity(10^-5N*s/m^2)
 
