@@ -6,8 +6,8 @@ Launch_2_3 = 0;
 Launch_2_4 = 0;
 Launch_2_5 = 0;
 %load data. Just change the number of the launch in both lines below
-load('Launch_2_5.txt')
-launch=Launch_2_5;
+load('Launch_2_4.txt')
+launch=Launch_2_4;
 
 %make column vectors out of the table of data
 x_accel=launch(:,1);
@@ -173,7 +173,7 @@ title('Roll Rate vs Time')
 
 
 
-fileID = fopen('Launch_Time_Height_Velocity.txt', 'w')
+fileID = fopen('Launch_Time_Height_Velocity_4.txt', 'w')
 fprintf(fileID,'%6s %12s\r\n','t','v','h');
 for i = 1: length
    fprintf(fileID, '%6.2f %12.8f\r\n', timeValues, velocity, height);

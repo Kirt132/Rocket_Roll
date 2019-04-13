@@ -1,0 +1,7 @@
+clear
+close all
+[~,~,data] = xlsread('flutter_graph.csv')
+figure
+hold on
+plot(V_fms,)
+plot(v_frms
