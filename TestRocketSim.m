@@ -21,8 +21,8 @@ numberofsteps = length(time);
 timestep = zeros(1,numberofsteps);
 velocity = arreauxspinning(:,3);  
 velocity = velocity(5:end-5);
-roll = arreauxspinning(:,3);
-roll = velocity(5:end-5);
+roll = arreauxspinning(:,5);
+roll = roll(5:end-5);
 for n = 1:numberofsteps-1
    timestep(n) = time(n+1) - time (n);
 end
@@ -42,6 +42,6 @@ end
 ohmega2 = ohmega2/2/pi;
 figure
 hold on
-roll = roll*pi/180;
+roll = roll/360;
 plot(time(1:1200), ohmega2(1:1200));
 plot(time(1:1200), roll(1:1200));
