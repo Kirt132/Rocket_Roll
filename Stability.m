@@ -3,21 +3,33 @@
     %rocket next to the spin data to show the quick passby
     %define variables
     density = 1.2; %density in kg/m^3
-    velocity = 343*[0:.1:1]; % get velocity from other script, for now it is mach 0-1
-    q = 1/2*density*velocity.^2; %dynamic pressure, ideally get this from the other script
+    %velocity_mach = 343*[0:.1:1]; % get velocity from other script, for now it is mach 0-1 (m/s)
+    velocity_mach = abs(rocket_flight(:,3)); %velocity from file (m/s)
+    q = 1/2*density*velocity_mach.^2; %dynamic pressure, ideally get this from the other script
     Rocket_cd = 0.7;%Cd of the rocket based on RasAeroSims
-    finwidth = 3*0.0254;
-    finthickness = .005;
+    finwidth = finheightm; %width of fin (m)
+    finthickness = 0.005; %thickness of fin (m)
     Stability_Margin = 2; %use data from the simulation here too
-    d = 2; %diameter of the rocket in in
-    Ixx = 30;%the yaw and pitch moment of interita of the rocket
-    Izz = .1;%the roll moment of the rocket, much smaller than Ixx
-    C_m_alpha = -Rocket_cd*Stability_Margin*d*0.0254/2; %calculating the moment
+    d = 0.0472; %diameter of the rocket (m)
+    Ixx = 0.2129;%the yaw and pitch moment of inertia of the rocket (kg*m*m)[estimate]
+    Izz = 0.00041764;%the roll moment of the rocket, much smaller than Ixx (kg*m*m)
+    C_m_alpha = -Rocket_cd*Stability_Margin*d/2; %calculating the moment
     %divided by the area) caused by a small angle sinx = x at small angles
-    A_ref = pi*0.0254*d + 3*finwidth*finthickness; %cross sectional area of the rocket
+    A_ref = pi*d + 3*finwidth*finthickness; %cross sectional area of the rocket
 
     pitchfreq = (sqrt(-q*A_ref*C_m_alpha/(Ixx-Izz)))/(2*pi);
-    plot(velocity, pitchfreq)
+    figure(48)
+    hold on
+    plot(velocity_mach,pitchfreq,'LineWidth',2)
+    plot(yvelmod,ohmega/(2*pi),'LineWidth',2)
+    xlabel('Velocity (m/s)')
+    ylabel('Rotation Rate (Hz)')
+    xlim([0 1])
+    ylim([0 0.02])
+    legend('Pitching Frequency','Rocket Spin Rate')
+    title('Pitch Roll Coupling')
+    set(gcf,'Color','w')
+    hold off
     
 %% Instability Caused by offcenter mass
    %The goal of this is to show the force caused by an unbalanced rocket
