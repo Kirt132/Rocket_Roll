@@ -6,8 +6,8 @@ Launch_2_3 = 0;
 Launch_2_4 = 0;
 Launch_2_5 = 0;
 %load data. Just change the number of the launch in both lines below
-load('Launch_2_4.txt')
-launch=Launch_2_4;
+load('Launch_2_5.txt')
+launch=Launch_2_5;
 
 %make column vectors out of the table of data
 x_accel=launch(:,1);
@@ -24,7 +24,7 @@ z_mag=launch(:,9);
 %create time vector. Assume logger writes at 50 hz. 
 [length,width]=size(x_accel);
 i= 1:1:length;
-time = i*.0286;
+time = i*.02;
 
 %find the launch window. Each launch has various accelerations before
 %ignition which means there needs to be a different threshold in order to
@@ -147,13 +147,13 @@ ax2 = subplot(3,1,2);
 velocity = zeros(length,1);
 velocity(1) = 0;
 for i = 2:length
-    velocity(i) = z_accel_processed(i-1)*9.8 * .0286 + velocity(i-1);
+    velocity(i) = z_accel_processed(i-1)*9.8 * .02 + velocity(i-1);
 end
 [length,width]=size(velocity);
 height = zeros(length,1);
 height(1) = 0;
 for i = 2:length
-    height(i) = velocity(i-1) * .0286 + height(i-1);
+    height(i) = velocity(i-1) * .02 + height(i-1);
 end
 
 plot(timeValues,velocity)
@@ -173,10 +173,10 @@ title('Roll Rate vs Time')
 
 
 
-fileID = fopen('Launch_Time_Height_Velocity_4.txt', 'w')
-fprintf(fileID,'%6s %12s\r\n','t','v','h');
+fileID = fopen('Launch_Time_Height_Velocity.txt', 'w')
+fprintf(fileID,'%6s %18s\r %18s\r\n','t','v','h');
 for i = 1: length
-   fprintf(fileID, '%6.2f %12.8f\r\n', timeValues, velocity, height);
+   fprintf(fileID, '%6.2f %18.8f\r %18s\r\n', timeValues(i), velocity(i), height(i));
 end
 fclose(fileID)
 
