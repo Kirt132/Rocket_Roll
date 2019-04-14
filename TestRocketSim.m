@@ -3,6 +3,7 @@
 %Initialize for the moment solver script
 
 %%load the file with velocity profile and time here
+load arreauxspinning.mat
 lengths = .1143; %chord 1
 width = .0707;
 chordtip = .040005; %chord2
@@ -14,12 +15,14 @@ r =.0472/2; %rocket radius m
 stepsize = .0001;
 finnum = 3;
 inertia = .00041764;
-time = arreauxloaded(:,1);
+time = arreauxspinning(:,1);
 time = time(5:end-5);
-numberofsteps = 448;
+numberofsteps = length(time);
 timestep = zeros(1,numberofsteps);
-velocity = arreauxloaded(:,3);
+velocity = arreauxspinning(:,3);  
 velocity = velocity(5:end-5);
+roll = arreauxspinning(:,3);
+roll = velocity(5:end-5);
 for n = 1:numberofsteps-1
    timestep(n) = time(n+1) - time (n);
 end
@@ -28,7 +31,7 @@ ohmega2 = zeros(1,numberofsteps+1); %initializes size for matrix
 moment2 = zeros(1,numberofsteps+1); %initializes size for matrix
 alpha2 = zeros(1,numberofsteps+1); %initializes size for matrix
 
-for n = 1:448
+for n = 1:length(time)
     ohmega2(n+1) = ohmega2(n);
     for i = 1:100
 moment2(n) = Moment_Calculator_2(lengths, width, chordtip, rho, velocity(n), theta, ohmega2(n+1), r, stepsize, finnum);
@@ -38,5 +41,7 @@ ohmega2(n+1) = ohmega2(n+1)+ alpha2(n)*timestep(n)/100;
 end
 ohmega2 = ohmega2/2/pi;
 figure
-time(449) = 12;
-plot(time(1:286), ohmega2(1:286));
+hold on
+roll = roll*pi/180;
+plot(time(1:1200), ohmega2(1:1200));
+plot(time(1:1200), roll(1:1200));
