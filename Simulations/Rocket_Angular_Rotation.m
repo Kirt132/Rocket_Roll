@@ -253,7 +253,7 @@ for n = 1:numberofsteps
     if xvel(b)==0
         theta=0;
     end
-    moment2(n) = Moment_Calculator(finbasem, finheightm, finlengthm, airdensity, speed(b), degrees, ohmega2(n), rocket_radius_m, 0.0001, number_of_fins);%moment about the longitudinal axis of the rocket caused by the lift of the fins
+    moment2(n) = Moment_Calculator_2(finbasem, finheightm, finlengthm, airdensity, speed(b), degrees, ohmega2(n), rocket_radius_m, 0.0001, number_of_fins);%moment about the longitudinal axis of the rocket caused by the lift of the fins
     alpha2(n) = moment2(n)/inertia;
     ohmega2(n+1) = ohmega2(n)+ alpha2(n)*timestep;
 end
@@ -297,7 +297,7 @@ load D:\MATLAB\Rockets\Launch_Profiles\Past_Launches\Launch_5_Roll_Rate.txt
 clean_plot_max=Launch_5_Roll_Rate; %load file for measured gyro data for Launch_2_5
 load D:\MATLAB\Rockets\Launch_Profiles\Simulated_Launches\Test_Launch_Curve_2.txt %file for OpenRockets simulated roll rate
 
-plot(ax1_2,time,ohmega/(2*pi),'b',clean_plot_max(:,1)-0.48,clean_plot_max(:,2),'r',Test_Launch_Curve_2(:,1),Test_Launch_Curve_2(:,5)/360,time,ohmega2*2*pi/360,'m','LineWidth',2)
+plot(ax1_2,time,ohmega/(2*pi),'b',clean_plot_max(:,1)-0.48,clean_plot_max(:,2),'r',Test_Launch_Curve_2(:,1),Test_Launch_Curve_2(:,5)/360,time,ohmega2,'m','LineWidth',2)
 xlim(ax1_2,[0, time(length(time))*1.1]);
 ylim(ax1_2,[0, (max(ohmega)/(2*pi))*1.1]);
 legend(ax1_2,'Simulated Roll Rate','Experimental Roll Rate','OpenRocket Simulated Roll Rate','Skin Friction Inclusion');
