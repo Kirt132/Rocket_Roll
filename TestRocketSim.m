@@ -3,7 +3,11 @@
 %Initialize for the moment solver script
 
 %%load the file with velocity profile and time here
-load arreauxspinning.mat
+load arreauxspinning.mat;
+load Launch_5_Roll_Rate.txt;
+launch = Launch_5_Roll_Rate;
+tmeasured=launch(:,1);
+wmeasured=launch(:,2);
 lengths = .1143; %chord 1
 width = .0707;
 chordtip = .040005; %chord2
@@ -40,8 +44,17 @@ ohmega2(n+1) = ohmega2(n+1)+ alpha2(n)*timestep(n)/100;
     end
 end
 ohmega2 = ohmega2/2/pi;
-figure
+figure('Position', [10 10 600 400])
 hold on
 roll = roll/360;
-plot(time(1:1200), ohmega2(1:1200));
-plot(time(1:1200), roll(1:1200));
+plot(time(1:1200), ohmega2(1:1200),'linewidth' , 3,'color', [0,0,1]);
+plot(time(1:1200), roll(1:1200),'linewidth' , 3,'color', [1,0,0]);
+wmeasured = wmeasured*35/50;
+tmeasured = tmeasured-.45;
+plot(tmeasured,wmeasured,'linewidth', 3,'color', [1,0,1]);
+axis([0,5.5,0,16]);
+set(gcf,'color','w');
+title ('Fin Test Rocket Roll Rate: Cant Angle 2^{\circ}')
+xlabel ('Time [s]')
+ylabel('Roll Rate [Hz]')
+legend('Numerical Model', 'OpenRocket Model','Launch Data')
