@@ -1,5 +1,5 @@
-
-function [Moment] = Moment_Calculator_2(lengths, width, chordtip, rho, V, theta, ohmega, r, stepsize, finnum);
+function Moment_
+[Moment] = Moment_Calculator_2(lengths, width, chordtip, rho, V, theta, ohmega, r, stepsize, finnum);
 %%make a function for the roll momenet of the rocket
 
 %%variables, comment out for actual code usage
@@ -14,14 +14,7 @@ function [Moment] = Moment_Calculator_2(lengths, width, chordtip, rho, V, theta,
 % stepsize = .0001;
 % finnum = 3;
 %%correcting the units
-V = abs(V);
-if V==0
-    V=0.0000000001;
-end
-if ohmega==0
-    ohmega=0.0000000001;
-end
-Vy = sin(theta)*abs(V);
+Vy = sin(theta)*V;
 %theta = theta*pi/180; %converts to radians if entered in degrees
 %%Magic Happens Here, Cool to compare to Cp estimates 
 intwidth = r:stepsize:width+r; %width at which to intergrate the moment over
@@ -42,5 +35,4 @@ Fd = Cf*rho*r^3*ohmega^2*l*pi;
 DampingMoment = Fd*r;
 
 %%Subtract skin friction from the initial moment
-Moment = real(M-DampingMoment);
-end
+M = M-DampingMoment
