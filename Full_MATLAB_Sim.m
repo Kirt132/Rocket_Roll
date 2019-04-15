@@ -2,7 +2,7 @@
 clear; %clear variables
 clc; %clear command window
 
-load Test_Launch_Curve.txt %load in text file with flight data
+load arreaux_loaded.txt %load in text file with flight data
 %test_launch: time(s), height(ft), velocity(m/s)
 load Atmosphere.txt %load atmospheric values comapared to sea level (average)
 %atmosphere: height(m), temperature(*C), gravity(m/s^2),

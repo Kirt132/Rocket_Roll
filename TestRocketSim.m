@@ -13,7 +13,7 @@ width = .0707;
 chordtip = .040005; %chord2
 rho = 1.2;%air density
 V = 343/2;%m/s
-theta = 2*pi/180;
+theta = 0*pi/180;
 ohmega = 16*2*pi; %radians per second
 r =.0472/2; %rocket radius m
 stepsize = .0001;
@@ -50,7 +50,8 @@ roll = roll/360;
 plot(time(1:1200), ohmega2(1:1200),'linewidth' , 3,'color', [0,0,1]);
 plot(time(1:1200), roll(1:1200),'linewidth' , 3,'color', [1,0,0]);
 wmeasured = wmeasured*35/50;
-tmeasured = tmeasured-.45;
+tmeasured = tmeasured-.53;
+tmeasured = tmeasured*50/35;
 plot(tmeasured,wmeasured,'linewidth', 3,'color', [1,0,1]);
 axis([0,5.5,0,16]);
 set(gcf,'color','w');
